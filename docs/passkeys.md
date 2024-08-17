@@ -27,8 +27,8 @@
 
 # Passkey auth demo on a Telegram Miniapp
 
-This is a telegram mini app wallet demo that uses Passkey authentication
-Mini app demo: https://t.me/JoyIDBot
+This is a telegram mini app wallet demo that uses Passkey authentication  
+Mini app demo: https://t.me/JoyIDBot  
 Repo: https://github.com/nervina-labs/joyid-mini-app-demo?tab=readme-ov-file
 
 # Development
