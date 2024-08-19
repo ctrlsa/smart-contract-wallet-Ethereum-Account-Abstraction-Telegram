@@ -37,3 +37,11 @@ The FIDO Alliance has been working on passwordless authentication standards for 
 
 Will passkeys replace passwords?
 In short, yes—eventually. Passkeys are simply a better option, and we’ve already seen more widespread adoption and advancements in the last six months.
+
+# Resources
+
+- https://fidoalliance.org/passkeys/
+- https://www.dashlane.com/blog/what-is-a-passkey-and-how-does-it-work
+- https://developers.google.com/identity/passkeys
+- https://www.oneidentity.com/learn/what-is-passkey-authentication.aspx
+- https://github.com/nervina-labs/joyid-mini-app-demo?tab=readme-ov-file
