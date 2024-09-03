@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
+import { MetamaskAdapter } from "@web3auth/metamask-adapter";
 import { Web3Auth } from "@web3auth/modal";
 import { useEffect, useState } from "react";
 import "./App.css";
@@ -19,6 +20,20 @@ const web3auth = new Web3Auth({
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
   privateKeyProvider,
+});
+const metamaskAdapter = new MetamaskAdapter({
+  clientId,
+  sessionTime: 3600,
+  web3AuthNetwork: "sapphire_devnet",
+  chainConfig: chain.sepolia,
+});
+
+web3auth.configureAdapter(metamaskAdapter);
+
+metamaskAdapter.setAdapterSettings({
+  sessionTime: 86400,
+  chainConfig: chain.sepolia,
+  web3AuthNetwork: "sapphire_devnet",
 });
 
 export const Web3AuthConnectPage: FC = () => {
