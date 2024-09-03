@@ -6,7 +6,7 @@ import { nodePolyfills } from "vite-plugin-node-polyfills";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/telegram-web3auth-wallet-test",
+  base: "/",
   plugins: [
     // Allows using React dev server along with building a React application with Vite.
     // https://npmjs.com/package/@vitejs/plugin-react-swc
@@ -26,13 +26,5 @@ export default defineConfig({
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,
-  },
-  resolve: {
-    alias: {
-      // If you need to alias any other Node.js modules, add them here
-      events: "events",
-      process: "process",
-      buffer: "buffer",
-    },
   },
 });
