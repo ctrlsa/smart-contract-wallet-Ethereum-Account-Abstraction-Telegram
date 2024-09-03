@@ -9,7 +9,8 @@ import { chain } from "../../utils/chainConfig.ts";
 
 import RPC from "./ethersRPC.ts";
 
-const clientId = import.meta.env.VITE_APP_WEB3AUTH_CLIENT_ID;
+const clientId =
+  "BCBUwBan0SXEeDvNTcNmrl0u1xeRwnpO4m_3GgttguAtZeuhBSVxgLrhJ19Sw27_YaFlr_iNUiqhGJ8ndrkXgnQ";
 
 const privateKeyProvider = new EthereumPrivateKeyProvider({
   config: { chainConfig: chain.ethereum },
