@@ -1,34 +1,26 @@
 import type { FC } from "react";
-import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
+import { IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/modal";
 import { useEffect, useState } from "react";
 import "./App.css";
+import { chain } from "../../utils/chainConfig.ts";
 
 import RPC from "./ethersRPC.ts";
 
 const clientId = import.meta.env.VITE_APP_WEB3AUTH_CLIENT_ID;
 
-const chainConfig = {
-  chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0xaa36a7",
-  rpcTarget: "https://rpc.ankr.com/eth_sepolia",
-  displayName: "Ethereum Sepolia Testnet",
-  blockExplorerUrl: "https://sepolia.etherscan.io",
-  ticker: "ETH",
-  tickerName: "Ethereum",
-  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
-};
-
 const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: { chainConfig },
+  config: { chainConfig: chain.ethereum },
 });
 
 const web3auth = new Web3Auth({
+  chainConfig: chain.ethereum,
   clientId,
   web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET,
   privateKeyProvider,
 });
+
 export const Web3AuthConnectPage: FC = () => {
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
