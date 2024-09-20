@@ -16,7 +16,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
     "@tanstack/react-query": "^5.56.2",
-    "@twa-dev/sdk": "^7.0.0",
+    "@twa-dev/sdk": "^7.10.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",

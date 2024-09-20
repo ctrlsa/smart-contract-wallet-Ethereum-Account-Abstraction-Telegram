@@ -6,6 +6,8 @@ import { joyidConnector } from "@joyid/wagmi";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { sepolia } from "wagmi/chains";
 import { CircleCheck, CircleAlert } from "lucide-react";
+import { useEffect } from "react";
+import WebApp from "@twa-dev/sdk";
 
 export default function JoyIdTestPage() {
   const { address } = useAccount();
@@ -13,6 +15,10 @@ export default function JoyIdTestPage() {
   const { connectAsync } = useConnect({
     config: config,
   });
+
+  useEffect(() => {
+    WebApp.ready();
+  }, []);
 
   const onConnect = async () => {
     try {
