@@ -5,7 +5,7 @@ import { InitDataPage } from "@/pages/InitDataPage/InitDataPage";
 import { LaunchParamsPage } from "@/pages/LaunchParamsPage/LaunchParamsPage.tsx";
 import { ThemeParamsPage } from "@/pages/ThemeParamsPage/ThemeParamsPage.tsx";
 import { TONConnectPage } from "@/pages/TONConnectPage/TONConnectPage";
-import { Balances } from "@/pages/Balances/Balances";
+import { Moralis } from "@/pages/Moralis/Moralis";
 
 interface Route {
   path: string;
@@ -24,9 +24,9 @@ export const routes: Route[] = [
     title: "Launch Params",
   },
   {
-    path: "/balances",
-    Component: Balances,
-    title: "Balances",
+    path: "/Moralis",
+    Component: Moralis,
+    title: "Moralis",
   },
   {
     path: "/ton-connect",

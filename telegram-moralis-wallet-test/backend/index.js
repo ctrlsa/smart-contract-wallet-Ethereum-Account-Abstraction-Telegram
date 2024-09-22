@@ -20,7 +20,7 @@ const MORALIS_API_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6Ijk5YjU3OGNhLWQ3YzItNDJkNi05MGYxLTc3ZmJiNzcwZTA2ZSIsIm9yZ0lkIjoiNDA4NDc2IiwidXNlcklkIjoiNDE5NzMyIiwidHlwZUlkIjoiNWVhNDcyMWUtMjZjOS00Y2NlLWFjZjQtYTgyMjk2NGViNWZiIiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE3MjY0NDEyMjksImV4cCI6NDg4MjIwMTIyOX0.-SwU8Soa8c1KjjEUhuHPvXnJz7kMBbeFfsPJw2hro2w";
 const address = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d";
 
-app.get("/balances", async (req, res) => {
+app.get("/moralis", async (req, res) => {
   try {
     // Promise.all() for receiving data async from two endpoints
     const [nativeBalance, tokenBalances] = await Promise.all([

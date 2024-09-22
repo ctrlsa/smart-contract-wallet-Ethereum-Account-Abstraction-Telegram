@@ -2,12 +2,12 @@ import { FC, useEffect, useState } from "react";
 
 import axios from "axios";
 
-export const Balances: FC = () => {
+export const Moralis: FC = () => {
   const [response, setResponse] = useState({});
   const [nftTransfers, setNftTransfers] = useState([]);
 
   useEffect(() => {
-    axios("http://localhost:4000/balances").then(({ data }) => {
+    axios("http://localhost:4000/moralis").then(({ data }) => {
       setResponse(data);
       setNftTransfers(data.walletNFTTransfers.result);
     });
@@ -19,7 +19,7 @@ export const Balances: FC = () => {
       <h3>Native Balance: {response.nativeBalance} ETH</h3>
       <h3>Token Balances: </h3>
       <div>
-        {response.tokenBalances.map((token) => {
+        {response.tokenBalances?.map((token) => {
           return <div key={token}>{token}</div>;
         })}
       </div>
