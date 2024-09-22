@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { Link } from "@/components/Link/Link.tsx";
 
 import tonSvg from "./ton.svg";
+import moralislogo from "./moralis-logo.svg";
 
 export const IndexPage: FC = () => {
   return (
@@ -15,11 +16,11 @@ export const IndexPage: FC = () => {
         <Link to="/Moralis">
           <Cell
             before={
-              <Image src={tonSvg} style={{ backgroundColor: "#007AFF" }} />
+              <Image src={moralislogo} style={{ backgroundColor: "#007AFF" }} />
             }
-            subtitle="Connect your TON wallet"
+            subtitle="View Moralis Demo"
           >
-            TON Connect
+            Moralis
           </Cell>
         </Link>
       </Section>
