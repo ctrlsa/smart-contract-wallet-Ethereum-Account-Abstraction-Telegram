@@ -17,7 +17,12 @@ export const Balances: FC = () => {
     <div>
       <h3>Wallet: {response.address}</h3>
       <h3>Native Balance: {response.nativeBalance} ETH</h3>
-      <h3>Token Balances: {response.tokenBalances}</h3>
+      <h3>Token Balances: </h3>
+      <div>
+        {response.tokenBalances.map((token) => {
+          return <div key={token}>{token}</div>;
+        })}
+      </div>
       <h3>NFT Transfers:</h3>
       <div
         style={{ maxHeight: "300px", overflowY: "auto", maxWidth: "1000px" }}
