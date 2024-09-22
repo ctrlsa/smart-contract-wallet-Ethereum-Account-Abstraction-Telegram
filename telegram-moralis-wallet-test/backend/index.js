@@ -33,9 +33,15 @@ app.get("/balances", async (req, res) => {
         address,
       }),
     ]);
+    const walletNFTTransfers = await Moralis.EvmApi.nft.getWalletNFTTransfers({
+      address,
+      chain: EvmChain.ETHEREUM,
+    });
+
     res.status(200).json({
       // formatting the output
       address,
+      walletNFTTransfers,
       nativeBalance: nativeBalance.result.balance.ether,
       tokenBalances: tokenBalances.result.map((token) => token.display()),
     });
