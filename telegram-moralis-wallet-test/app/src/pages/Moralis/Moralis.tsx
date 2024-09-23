@@ -2,6 +2,27 @@ import { FC, useEffect, useState } from "react";
 
 import axios from "axios";
 
+interface walletNFTTransfers {
+  token_id: string;
+  from_address: string;
+  to_address: string;
+  amount: string;
+  block_timestamp: string;
+}
+interface ResponseType {
+  address: string;
+  nativeBalance: string;
+  tokenBalances: string[];
+  walletNFTTransfers: {
+    result: {
+      token_id: string;
+      from_address: string;
+      to_address: string;
+      amount: string;
+      block_timestamp: string;
+    }[];
+  };
+}
 export const Moralis: FC = () => {
   const [response, setResponse] = useState({});
   const [nftTransfers, setNftTransfers] = useState([]);
@@ -17,11 +38,11 @@ export const Moralis: FC = () => {
 
   return (
     <div>
-      <h3>Wallet: {response.address}</h3>
-      <h3>Native Balance: {response.nativeBalance} ETH</h3>
+      <h3>Wallet: {(response as ResponseType).address}</h3>
+      <h3>Native Balance: {(response as ResponseType).nativeBalance} ETH</h3>
       <h3>Token Balances: </h3>
       <div>
-        {response.tokenBalances?.map((token) => {
+        {(response as ResponseType).tokenBalances?.map((token) => {
           return <div key={token}>{token}</div>;
         })}
       </div>
@@ -41,12 +62,12 @@ export const Moralis: FC = () => {
           </thead>
           <tbody>
             {nftTransfers.map((transfer) => (
-              <tr key={transfer.token_id}>
-                <td>{transfer.token_id}</td>
-                <td>{transfer.from_address}</td>
-                <td>{transfer.to_address}</td>
-                <td>{transfer.amount}</td>
-                <td>{transfer.block_timestamp}</td>
+              <tr key={(response as walletNFTTransfers).token_id}>
+                <td>{(transfer as walletNFTTransfers).token_id}</td>
+                <td>{(transfer as walletNFTTransfers).from_address}</td>
+                <td>{(transfer as walletNFTTransfers).to_address}</td>
+                <td>{(transfer as walletNFTTransfers).amount}</td>
+                <td>{(transfer as walletNFTTransfers).block_timestamp}</td>
               </tr>
             ))}
           </tbody>
