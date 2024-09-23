@@ -52,7 +52,9 @@ app.get("/moralis", async (req, res) => {
     res.json({ error: error.message });
   }
 });
-
+app.get("/hello", (req, res) => {
+  res.send("Hello World!");
+});
 const startServer = async () => {
   await Moralis.start({
     apiKey: MORALIS_API_KEY,

@@ -7,10 +7,12 @@ export const Moralis: FC = () => {
   const [nftTransfers, setNftTransfers] = useState([]);
 
   useEffect(() => {
-    axios("http://localhost:4000/moralis").then(({ data }) => {
-      setResponse(data);
-      setNftTransfers(data.walletNFTTransfers.result);
-    });
+    axios("https://moralis-demo-backend.vercel.app/moralis").then(
+      ({ data }) => {
+        setResponse(data);
+        setNftTransfers(data.walletNFTTransfers.result);
+      }
+    );
   }, []);
 
   return (
