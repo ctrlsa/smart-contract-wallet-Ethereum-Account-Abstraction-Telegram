@@ -3,7 +3,6 @@ import type { FC } from "react";
 
 import { Link } from "@/components/Link/Link.tsx";
 
-import tonSvg from "./ton.svg";
 import moralislogo from "./moralis-logo.svg";
 
 export const IndexPage: FC = () => {
