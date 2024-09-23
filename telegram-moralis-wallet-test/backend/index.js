@@ -11,7 +11,7 @@ const port = 4000;
 // allow access to React app domain
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
   })
 );
