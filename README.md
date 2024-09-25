@@ -28,11 +28,18 @@ Features which can be considered as meaning what control means:
 
 ## How to contribute 
 
+1. Draft GSheet Table with R&D tasks: 
+https://docs.google.com/spreadsheets/d/16J8TZ3M70UWyv7f6_CMeSuFqLS-F1TtUG1oz1ZiXjD0/edit?gid=0#gid=0  
+2. Tasks are poorly described now, some may be combined, new ones may be added. 
+Will update gradually. 
+3. {in the GSheet Table} For tasks you are interested in - please, put your name in “Contributor in charge” cell; approximate dates - in “Start date” & “Delivery date” cells.
+4. GitHub workflow: 
 - Create a new Issue in our repo
 - Create a new branch
 - Develop mini-prototype at the intersection of your R&D task, https://core.telegram.org/api and https://core.telegram.org/bots/webapps
 - Push commits to our GitHub. // Smaller commits with higher frequency are preferable
 - Then - make a pull request
-
+5. {FYI} General GDoc about our grant project with Roadmap, specs, notes & drafts: 
+https://docs.google.com/document/d/1AoTBhr-YAW8MyuQ998OUm2pG-O0lEe61JGtrFPlPp-4/edit#heading=h.u9xffrnnqbh8
 
 For more information, check out the detailed documentation in the `docs/` directory.
