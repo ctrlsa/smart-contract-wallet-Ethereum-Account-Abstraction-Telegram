@@ -26,7 +26,7 @@ Features which can be considered as meaning what control means:
 - `webapp/`: Telegram wallet mini app front-end
 - `telegram-bot/`: Telegram bot for handling user interactions
 
-## How to contribute? 
+## How to contribute 
 
 - Create a new Issue in our repo
 - Create a new branch
