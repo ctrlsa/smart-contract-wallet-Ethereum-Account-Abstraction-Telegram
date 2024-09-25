@@ -30,8 +30,7 @@ Features which can be considered as meaning what control means:
 
 1. Draft GSheet Table with R&D tasks: 
 https://docs.google.com/spreadsheets/d/16J8TZ3M70UWyv7f6_CMeSuFqLS-F1TtUG1oz1ZiXjD0/edit?gid=0#gid=0  
-2. Tasks are poorly described now, some may be combined, new ones may be added. 
-Will update gradually. 
+2. Some tasks may be combined, new ones may be added. Will update gradually. 
 3. {in the GSheet Table} For tasks you are interested in - please, put your name in “Contributor in charge” cell; approximate dates - in “Start date” & “Delivery date” cells.
 4. GitHub workflow: 
 - Create a new Issue in our repo
