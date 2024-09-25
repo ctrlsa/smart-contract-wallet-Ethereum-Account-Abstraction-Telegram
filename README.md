@@ -26,4 +26,13 @@ Features which can be considered as meaning what control means:
 - `webapp/`: Telegram wallet mini app front-end
 - `telegram-bot/`: Telegram bot for handling user interactions
 
+## How to contribute? 
+
+- Create a new Issue in our repo
+- Create a new branch
+- Develop mini-prototype at the intersection of your R&D task, https://core.telegram.org/api and https://core.telegram.org/bots/webapps
+- Push commits to our GitHub. // Smaller commits with higher frequency are preferable
+- Then - make a pull request
+
+
 For more information, check out the detailed documentation in the `docs/` directory.
