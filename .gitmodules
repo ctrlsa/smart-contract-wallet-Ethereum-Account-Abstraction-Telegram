@@ -1,0 +1,3 @@
+[submodule "telegram-joyid-miniapp-test"]
+	path = telegram-joyid-miniapp-test
+	url = https://github.com/JJOptimist/joyid-tg-test.git
