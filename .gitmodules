@@ -1,3 +1,6 @@
 [submodule "telegram-joyid-miniapp-test"]
 	path = telegram-joyid-miniapp-test
 	url = https://github.com/JJOptimist/joyid-tg-test.git
+[submodule "telegram-mpc-test"]
+	path = telegram-mpc-test
+	url = git@github.com:zarej/telegram-mpc-test.git
