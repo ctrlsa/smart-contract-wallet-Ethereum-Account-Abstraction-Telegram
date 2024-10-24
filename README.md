@@ -15,16 +15,23 @@ R&D of solutions for EVM developers to simplify building at the intersection of:
 7. Build prototypes
 
 ## How to contribute 
-- Select an [existing Issue](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/issues) in this repo or create a new relevant Issue 
-- Clone this repo to your local machine 
-- Create a new branch locally named as your Issue. Ex.: "feature-web3auth"
-- Work on your Issue locally 
+- Select an [existing Issue](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/issues) in original "Team" repo or create a new relevant Issue 
+- Assign this Issue to yourself
+- {if necessary} Add label & clear title for the Issue 
+- Write in description of the Issue: 
+    - Your estimated date of delivery (deadline)
+    - How your delivered outcome will look like (Ex.: Code. Diagram. Spreadsheet. Text bullets)
+- Fork original "Team" repo to your personal GitHub 
+- Clone your personal GitHub fork repo to local machine 
+- Create a new branch locally named as your Issue. Ex.: feature/<issue_number>-<branch_name>
+- Work on your Issue locally. Make regular commits
+- Push local changes to your personal GitHub fork 
+- {on GitHub} Pull request from your personal fork to original "Team" repo. Reference your GitHub Issue in the pull request description 
 - If makes sense for your Issue: 
-    - Make commits with working code. To demonstrate: what was explored / validated, results achieved, etc.
     - Build the simplest possible [Telegram Mini App](https://core.telegram.org/bots/webapps) prototype 
         - Should be deployed & working online as a separate app 
         - [This template](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram) may be used to generate [Telegram Mini Apps](https://core.telegram.org/bots/webapps) & easily publish on GitHub Pages 
     - Create unit-tests 
     - {documentation} Text down briefly: takeaways, comments, tutorial / guideline, etc.
-- Push your local branch with commits to this GitHub repo
-- Then - make a pull request to Main branch on GitHub
+
+
