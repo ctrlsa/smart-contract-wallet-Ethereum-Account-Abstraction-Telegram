@@ -15,18 +15,22 @@ R&D of solutions for EVM developers to simplify building at the intersection of:
 7. Build prototypes
 
 ## How to contribute 
-- Select an [existing Issue](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/issues) in original "Team" repo or create a new relevant Issue 
+- In [original "Team" repo](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram): select an [existing Issue](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/issues) or create a new relevant Issue 
 - Assign this Issue to yourself
 - {if necessary} Add label & clear title for the Issue 
 - Write in description of the Issue: 
     - Your estimated date of delivery (deadline)
     - How your delivered outcome will look like (Ex.: Code. Diagram. Spreadsheet. Text bullets)
-- Fork original "Team" repo to your personal GitHub 
+- Fork [original "Team" repo](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram) to your personal GitHub 
 - Clone your personal GitHub fork repo to local machine 
-- Create a new branch locally named as your Issue. Ex.: feature/<issue_number>-<branch_name>
+- Add [original "Team" repo](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram) as upstream remote: <br> `git remote add upstream https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram`
+- Sync regularly with upstream remote repo: <br>`git fetch upstream` <br>`git merge upstream/main`
+- Create a new branch locally named as your Issue: <br>`git checkout -b feature/<issue_number>-<branch_name>`
+
 - Work on your Issue locally. Make regular commits
-- Push local changes to your personal GitHub fork 
-- {on GitHub} Pull request from your personal fork to original "Team" repo. Reference your GitHub Issue in the pull request description 
+- Push local changes to your personal GitHub fork: <br>`git push origin feature/<issue_number>-<branch_name>`
+ 
+- {on GitHub} Pull request from your personal fork to [original "Team" repo](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram). Reference your GitHub Issue in the pull request description 
 - If makes sense for your Issue: 
     - Build the simplest possible [Telegram Mini App](https://core.telegram.org/bots/webapps) prototype 
         - Should be deployed & working online as a separate app 
