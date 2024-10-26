@@ -1,23 +1,13 @@
 ## Project overview
-R&D of solutions for EVM developers to simplify building at the intersection of: 
+R&D of solutions at the intersection of: 
 - [Ethereum](https://ethereum.org/en/) 
-- [Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337#abstract) 
-- EVM self-custodial / smart-contract wallets 
 - [Telegram](https://telegram.org/) platform
-
-## Research objectives
-1. Explore possibilities & limitations of [Telegram API](https://core.telegram.org/) & [Telegram Mini Apps](https://core.telegram.org/bots/webapps) for integrating EVM wallets 
-2. Research how private key can be stored for wallets integrated in Telegram 
-3. Investigate secure transaction signing using keys managed within Telegram 
-4. Integrate [Account Abstraction (ERC-4337)](https://eips.ethereum.org/EIPS/eip-4337#abstract) into [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
-5. R&D how various self-custodial wallet solutions existing in the market (Ex.: MPC, PassKey, Deterministic keys, etc.) can be integrated in Telegram
-6. Research how ZK solutions can be used with [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
-7. Build prototypes
+- EVM self-custodial / smart-contract wallets 
+- [Account Abstraction](https://eips.ethereum.org/EIPS/eip-4337#abstract) 
 
 ## How to contribute 
-- In [original "Team" repo](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram): select an [existing Issue](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/issues) or create a new relevant Issue 
-- Assign this Issue to yourself
-- {if necessary} Add label & clear title for the Issue 
+- In [original "Team" repo](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram): select an [existing Issue](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/issues) or create a new Issue 
+- Assign Issue to yourself. For new Issues - add label & clear title 
 - Write in description of the Issue: 
     - Your estimated date of delivery (deadline)
     - How your delivered outcome will look like (Ex.: Code. Diagram. Spreadsheet. Text bullets)
@@ -38,4 +28,12 @@ R&D of solutions for EVM developers to simplify building at the intersection of:
     - Create unit-tests 
     - {documentation} Text down briefly: takeaways, comments, tutorial / guideline, etc.
 
+## Project objectives
+1. Explore possibilities & limitations of [Telegram API](https://core.telegram.org/) & [Telegram Mini Apps](https://core.telegram.org/bots/webapps) for integrating EVM wallets 
+2. Research how private key can be stored for wallets integrated in Telegram 
+3. Investigate secure transaction signing using keys managed within Telegram 
+4. Integrate [Account Abstraction (ERC-4337)](https://eips.ethereum.org/EIPS/eip-4337#abstract) into [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
+5. R&D how various self-custodial wallet solutions existing in the market (Ex.: MPC, PassKey, Deterministic keys, etc.) can be integrated in Telegram
+6. Research how ZK solutions can be used with [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
+7. Build prototypes
 
