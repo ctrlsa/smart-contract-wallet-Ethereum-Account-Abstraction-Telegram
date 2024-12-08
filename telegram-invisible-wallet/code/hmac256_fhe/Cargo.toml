@@ -1,0 +1,13 @@
+[package]
+name = "sha256-fhe"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+tfhe = { version = "0.2.3", features = ["boolean", "x86_64-unix"] }
+rayon = "1.7.0"
+
+[features]
+default = []
+ladner_fischer = []
