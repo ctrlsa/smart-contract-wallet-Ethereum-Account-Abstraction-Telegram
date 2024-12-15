@@ -38,3 +38,6 @@ Includes the following projects:
 - [telegram-webapp-api-test](/telegram-webapp-api-test)
 
 Check README.md inside each project for more details
+
+## Additional information
+Please check [this spreadshhet](https://docs.google.com/spreadsheets/d/16J8TZ3M70UWyv7f6_CMeSuFqLS-F1TtUG1oz1ZiXjD0/edit?gid=0#gid=0) for more details about all project research.
