@@ -1,15 +1,15 @@
 # Overview
 
-| Directory | README Location | Bot | Description |
+| Directory | README Location | Prototype | Description |
 |----------------|----------------|----------------|-------------|
-| [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [Add Bot](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet |
-| [telegram-joyid-miniapp-test](/telegram-joyid-miniapp-test) | [README.md](/telegram-joyid-miniapp-test/README.md) | [Add Bot](https://t.me/joyidtest_bot) | JoyID miniapp |
-| [telegram-moralis-wallet-test](/telegram-moralis-wallet-test) | [README.md](/telegram-moralis-wallet-test/README.md) | [Add Bot](http://t.me/MoralisDemoBot/MoralisDemoApp) | Moralis wallet |
-| [telegram-mpc-test](/telegram-mpc-test) | [README.md](/telegram-mpc-test/README.md) | [Add Bot](https://t.me/TgAaMPCtestBot) | MPC (Multi-Party Computation) |
-| [telegram-privy-embed-wallet-test](/telegram-privy-embed-wallet-test) | [README.md](/telegram-privy-embed-wallet-test/README.md) | [Add Bot](https://t.me/zarejtgaatest_bot) | Privy embedded wallet |
-| [telegram-web3auth-wallet-test](/telegram-web3auth-wallet-test) | [README.md](/telegram-web3auth-wallet-test/README.md) | [Add Bot](https://t.me/Web3AuthDemoBot/Web3AuthDemoApplication) | Web3Auth wallet |
-| [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [Add Bot](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Varios ways to store data in Telegram WebApp |
-| [telegram-zerodev-test](/telegram-zerodev-test) | [README.md](/telegram-zerodev-test/README.md) | [Add Bot](https://t.me/zarejtgaazdpkbot) | ZeroDev |
+| [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [App](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet |
+| [telegram-joyid-miniapp-test](/telegram-joyid-miniapp-test) | [README.md](/telegram-joyid-miniapp-test/README.md) | [App](https://t.me/joyidtest_bot) | JoyID miniapp |
+| [telegram-moralis-wallet-test](/telegram-moralis-wallet-test) | [README.md](/telegram-moralis-wallet-test/README.md) | [App](http://t.me/MoralisDemoBot/MoralisDemoApp) | Moralis wallet |
+| [telegram-mpc-test](/telegram-mpc-test) | [README.md](/telegram-mpc-test/README.md) | [App](https://t.me/TgAaMPCtestBot) | MPC (Multi-Party Computation) |
+| [telegram-privy-embed-wallet-test](/telegram-privy-embed-wallet-test) | [README.md](/telegram-privy-embed-wallet-test/README.md) | [App](https://t.me/zarejtgaatest_bot) | Privy embedded wallet |
+| [telegram-web3auth-wallet-test](/telegram-web3auth-wallet-test) | [README.md](/telegram-web3auth-wallet-test/README.md) | [App](https://t.me/Web3AuthDemoBot/Web3AuthDemoApplication) | Web3Auth wallet |
+| [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [App](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Varios ways to store data in Telegram WebApp |
+| [telegram-zerodev-test](/telegram-zerodev-test) | [README.md](/telegram-zerodev-test/README.md) | [App](https://t.me/zarejtgaazdpkbot) | ZeroDev |
 | [joyid-tg-miniapp-demo](/joyid-tg-miniapp-demo) | [README.md](/joyid-tg-miniapp-demo/README.md) | - | JoyID App (NextJS, not telegram miniapp) |
 
 Clone with all submodules:
@@ -39,5 +39,4 @@ Includes the following projects:
 
 Check README.md inside each project for more details
 
-## Additional information
-Please check [this spreadshhet](https://docs.google.com/spreadsheets/d/16J8TZ3M70UWyv7f6_CMeSuFqLS-F1TtUG1oz1ZiXjD0/edit?gid=0#gid=0) for more details about all project research.
+## {?} Additional information
