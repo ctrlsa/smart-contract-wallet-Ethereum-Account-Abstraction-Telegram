@@ -10,7 +10,14 @@
 | [telegram-web3auth-wallet-test](/telegram-web3auth-wallet-test) | [README.md](/telegram-web3auth-wallet-test/README.md) | [App](https://t.me/Web3AuthDemoBot/Web3AuthDemoApplication) | Web3Auth wallet |
 | [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [App](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Varios ways to store data in Telegram WebApp |
 | [telegram-zerodev-test](/telegram-zerodev-test) | [README.md](/telegram-zerodev-test/README.md) | [App](https://t.me/zarejtgaazdpkbot) | ZeroDev |
-| [joyid-tg-miniapp-demo](/joyid-tg-miniapp-demo) | [README.md](/joyid-tg-miniapp-demo/README.md) | - | JoyID App (NextJS, not telegram miniapp) |
+| [metamask-tg-wallet](/metamask-tg-wallet) | [README.md](/metamask-tg-wallet/README.md) | [App](?link?) | MetaMask |
+| [rabby-wallet](/rabby-wallet) | [README.md](/rabby-wallet/README.md) | [App](?link?) | Rabby |
+| [telegram-invisible-wallet](/telegram-invisible-wallet) | [README.md](/telegram-invisible-wallet/README.md) | - | Invisible Wallets. TG Authentication. ZK in TG |
+| [{?}joyid-tg-miniapp-demo](/joyid-tg-miniapp-demo) | [README.md](/joyid-tg-miniapp-demo/README.md) | - | {?} JoyID App (NextJS, not telegram miniapp) |
+| [{?}passkeys](?link?) | [passkeys.md](/docs/passkeys.md) | - | {?} |
+| [{?}Coinbase](?link?) | [README.md](?link?) | {?} | {?} |
+| [{?}Tomo](?link?) | [README.md](?link?) | {?} | {?} |
+
 
 Clone with all submodules:
 ```bash
