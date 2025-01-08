@@ -1,23 +1,25 @@
 # Overview
-
-| Directory | README Location | Prototype | Description |
+## Experiments to integrate various wallet solutions in [Telegram Mini App](https://core.telegram.org/bots/webapps)
+| Directory with code| ReadMe location | Deployed TG bot/app | Description |
 |----------------|----------------|----------------|-------------|
-| [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [App](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet |
-| [telegram-joyid-miniapp-test](/telegram-joyid-miniapp-test) | [README.md](/telegram-joyid-miniapp-test/README.md) | [App](https://t.me/joyidtest_bot) | JoyID miniapp |
-| [telegram-moralis-wallet-test](/telegram-moralis-wallet-test) | [README.md](/telegram-moralis-wallet-test/README.md) | [App](http://t.me/MoralisDemoBot/MoralisDemoApp) | Moralis wallet |
-| [telegram-mpc-test](/telegram-mpc-test) | [README.md](/telegram-mpc-test/README.md) | [App](https://t.me/TgAaMPCtestBot) | MPC (Multi-Party Computation) |
-| [telegram-privy-embed-wallet-test](/telegram-privy-embed-wallet-test) | [README.md](/telegram-privy-embed-wallet-test/README.md) | [App](https://t.me/zarejtgaatest_bot) | Privy embedded wallet |
-| [telegram-web3auth-wallet-test](/telegram-web3auth-wallet-test) | [README.md](/telegram-web3auth-wallet-test/README.md) | [App](https://t.me/Web3AuthDemoBot/Web3AuthDemoApplication) | Web3Auth wallet |
-| [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [App](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Varios ways to store data in Telegram WebApp |
-| [telegram-zerodev-test](/telegram-zerodev-test) | [README.md](/telegram-zerodev-test/README.md) | [App](https://t.me/zarejtgaazdpkbot) | ZeroDev |
-| [metamask-tg-wallet](/metamask-tg-wallet) | [README.md](/metamask-tg-wallet/README.md) | [App](?link?) | MetaMask |
-| [rabby-wallet](/rabby-wallet) | [README.md](/rabby-wallet/README.md) | [App](?link?) | Rabby |
+| [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [Prototype](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet |
+| [telegram-joyid-miniapp-test](/telegram-joyid-miniapp-test) | [README.md](/telegram-joyid-miniapp-test/README.md) | [Prototype](https://t.me/joyidtest_bot) | JoyID miniapp |
+| [telegram-moralis-wallet-test](/telegram-moralis-wallet-test) | [README.md](/telegram-moralis-wallet-test/README.md) | [Prototype](http://t.me/MoralisDemoBot/MoralisDemoApp) | Moralis wallet |
+| [telegram-mpc-test](/telegram-mpc-test) | [README.md](/telegram-mpc-test/README.md) | [Prototype](https://t.me/TgAaMPCtestBot) | MPC (Multi-Party Computation) |
+| [telegram-privy-embed-wallet-test](/telegram-privy-embed-wallet-test) | [README.md](/telegram-privy-embed-wallet-test/README.md) | [Prototype](https://t.me/zarejtgaatest_bot) | Privy embedded wallet |
+| [telegram-web3auth-wallet-test](/telegram-web3auth-wallet-test) | [README.md](/telegram-web3auth-wallet-test/README.md) | [Prototype](https://t.me/Web3AuthDemoBot/Web3AuthDemoApplication) | Web3Auth wallet |
+| [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [Prototype](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Varios ways to store data in Telegram WebApp |
+| [telegram-zerodev-test](/telegram-zerodev-test) | [README.md](/telegram-zerodev-test/README.md) | [Prototype](https://t.me/zarejtgaazdpkbot) | ZeroDev |
+| [metamask-tg-wallet](/metamask-tg-wallet) | [README.md](/metamask-tg-wallet/README.md) | [? Prototype](?link?) | MetaMask |
+| [rabby-wallet](/rabby-wallet) | [README.md](/rabby-wallet/README.md) | [? Prototype](?link?) | Rabby |
 | [telegram-invisible-wallet](/telegram-invisible-wallet) | [README.md](/telegram-invisible-wallet/README.md) | - | Invisible Wallets. TG Authentication. ZK in TG |
 | [{?}joyid-tg-miniapp-demo](/joyid-tg-miniapp-demo) | [README.md](/joyid-tg-miniapp-demo/README.md) | - | {?} JoyID App (NextJS, not telegram miniapp) |
 | [{?}passkeys](?link?) | [passkeys.md](/docs/passkeys.md) | - | {?} |
-| [{?}Coinbase](?link?) | [README.md](?link?) | {?} | {?} |
-| [{?}Tomo](?link?) | [README.md](?link?) | {?} | {?} |
+| [{?}Coinbase](?link?) // {?}PR44 | [? README.md](?link?) | {?} Prototype | {?} |
+| [{?}Tomo](?link?) | [? README.md](?link?) | {?} Prototype | {?} |
+| ... | ... | ... | ... |
 
+// Please, check ["How to contribute"](/README.md) to add a new solution to this table or to inform about bugs/updates
 
 Clone with all submodules:
 ```bash
