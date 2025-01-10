@@ -1,14 +1,14 @@
 # Overview
 ## Experiments to integrate various wallet solutions in [Telegram Mini App](https://core.telegram.org/bots/webapps)
-| Directory with code| ReadMe location | Deployed TG bot/app | Description |
-|----------------|----------------|----------------|-------------|
-| [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [Prototype](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet |
+| Directory with code| ReadMe location | Deployed TG bot/app | {?}Description | Security Level | Self-custodial | Pluses | Minuses | {?}Comments & details | {?}Links |
+|----------------|----------------|----------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------| 
+| [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [Prototype](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet |  |  | 
 | [telegram-joyid-miniapp-test](/telegram-joyid-miniapp-test) | [README.md](/telegram-joyid-miniapp-test/README.md) | [Prototype](https://t.me/joyidtest_bot) | JoyID miniapp |
 | [telegram-moralis-wallet-test](/telegram-moralis-wallet-test) | [README.md](/telegram-moralis-wallet-test/README.md) | [Prototype](http://t.me/MoralisDemoBot/MoralisDemoApp) | Moralis wallet |
 | [telegram-mpc-test](/telegram-mpc-test) | [README.md](/telegram-mpc-test/README.md) | [Prototype](https://t.me/TgAaMPCtestBot) | MPC (Multi-Party Computation) |
 | [telegram-privy-embed-wallet-test](/telegram-privy-embed-wallet-test) | [README.md](/telegram-privy-embed-wallet-test/README.md) | [Prototype](https://t.me/zarejtgaatest_bot) | Privy embedded wallet |
 | [telegram-web3auth-wallet-test](/telegram-web3auth-wallet-test) | [README.md](/telegram-web3auth-wallet-test/README.md) | [Prototype](https://t.me/Web3AuthDemoBot/Web3AuthDemoApplication) | Web3Auth wallet |
-| [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [Prototype](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Varios ways to store data in Telegram WebApp |
+| [telegram-webapp-api-test](/telegram-webapp-api-test) | [README.md](/telegram-webapp-api-test/README.md) | [Prototype](https://t.me/thisismyrandombotmPfKoqm2Bot/walletTestApp) | Various ways to store data in Telegram WebApp |
 | [telegram-zerodev-test](/telegram-zerodev-test) | [README.md](/telegram-zerodev-test/README.md) | [Prototype](https://t.me/zarejtgaazdpkbot) | ZeroDev |
 | [metamask-tg-wallet](/metamask-tg-wallet) | [README.md](/metamask-tg-wallet/README.md) | [? Prototype](?link?) | MetaMask |
 | [rabby-wallet](/rabby-wallet) | [README.md](/rabby-wallet/README.md) | [? Prototype](?link?) | Rabby |
