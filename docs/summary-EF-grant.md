@@ -33,7 +33,7 @@
 - "Invisible" wallets in Telegram
 - Applying ZKP in Telegram 
 - Applying FHE in Telegram 
-- Possibilities to “authorize txns on-chain while not revealing Telegram account/ID”
+- Possibilities to authorize txns on-chain while not revealing Telegram account/ID
 
 ## Milestone 1.4. 
 ### Admin tasks done
