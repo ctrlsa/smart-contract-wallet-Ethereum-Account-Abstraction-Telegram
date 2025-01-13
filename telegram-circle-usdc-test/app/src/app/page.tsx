@@ -501,7 +501,7 @@ export default function Home() {
                 disabled={loading || !userToken}
                 className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Create Challenge
+                Create Pin
               </button>
             </div>
           )}
