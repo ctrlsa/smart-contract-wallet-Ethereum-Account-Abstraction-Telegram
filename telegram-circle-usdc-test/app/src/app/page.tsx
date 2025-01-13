@@ -9,6 +9,16 @@ type Step = "initial" | "setup-pin" | "create-wallet" | "manage-wallet";
 
 // Initialize the SDK
 
+interface TokenBalance {
+  amount: string;
+  token: {
+    symbol: string;
+    decimals: number;
+    blockchain: string;
+    tokenAddress: string;
+  };
+}
+
 interface Wallet {
   id: string;
   state: string;
@@ -20,6 +30,7 @@ interface Wallet {
   accountType: string;
   updateDate: string;
   createDate: string;
+  balances?: TokenBalance[];
 }
 
 export default function Home() {
@@ -34,6 +45,13 @@ export default function Home() {
   const [userId, setUserId] = useState<string>("");
   const [encryptionKey, setEncryptionKey] = useState<string>("");
   const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [selectedWallet, setSelectedWallet] = useState<Wallet | null>(null);
+  const [transferAmount, setTransferAmount] = useState<string>("");
+  const [destinationAddress, setDestinationAddress] = useState<string>("");
+  const [showTransferForm, setShowTransferForm] = useState(false);
+  const [loadingBalances, setLoadingBalances] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   // Load userId from localStorage on component mount
   useEffect(() => {
@@ -307,6 +325,96 @@ export default function Home() {
     }
   };
 
+  const initiateTransfer = async () => {
+    try {
+      if (!selectedWallet || !transferAmount || !destinationAddress) {
+        setError("Please fill in all transfer details");
+        return;
+      }
+
+      setLoading(true);
+      const response = await axios.post("/api/wallet/transfer", {
+        userToken,
+        walletId: selectedWallet.id,
+        destinationAddress,
+        amount: transferAmount,
+      });
+
+      const newChallengeId = response.data.challengeId;
+
+      // Execute the transfer challenge
+      await new Promise<ChallengeResult>((resolve, reject) => {
+        const executeChallenge = () => {
+          sdk.execute(newChallengeId, (error, result) => {
+            if (error) {
+              console.error(`Error executing challenge: ${error.message}`);
+              reject(error);
+              return;
+            }
+
+            if (!result) {
+              reject(new Error("No result from challenge execution"));
+              return;
+            }
+
+            console.log(`Challenge: ${result.type}`);
+            console.log(`status: ${result.status}`);
+
+            if (result.status === "COMPLETE") {
+              resolve(result);
+              // Reset form
+              setShowTransferForm(false);
+              setSelectedWallet(null);
+              setTransferAmount("");
+              setDestinationAddress("");
+              // Reload wallets to show updated balances
+              loadWallets();
+            } else if (result.status === "IN_PROGRESS") {
+              // If still in progress, wait 2 seconds and try again
+              setTimeout(executeChallenge, 2000);
+            } else {
+              reject(
+                new Error(`Challenge failed with status: ${result.status}`)
+              );
+            }
+          });
+        };
+
+        // Start the polling
+        executeChallenge();
+      });
+    } catch (err: any) {
+      console.error("Transfer error:", err);
+      setError(
+        err.response?.data?.error || err.message || "Failed to transfer"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchWalletBalances = async (wallet: Wallet) => {
+    try {
+      setLoadingBalances((prev) => ({ ...prev, [wallet.id]: true }));
+      const response = await axios.get(
+        `/api/wallet/balances?walletId=${wallet.id}&userToken=${userToken}`
+      );
+
+      setWallets((prevWallets) =>
+        prevWallets.map((w) =>
+          w.id === wallet.id ? { ...w, balances: response.data.balances } : w
+        )
+      );
+    } catch (err: any) {
+      console.error("Balance fetch error:", err);
+      setError(
+        err.response?.data?.error || err.message || "Failed to fetch balances"
+      );
+    } finally {
+      setLoadingBalances((prev) => ({ ...prev, [wallet.id]: false }));
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
@@ -417,6 +525,55 @@ export default function Home() {
                             {wallet.state}
                           </span>
                         </div>
+
+                        {/* Balances Section */}
+                        <div className="mt-4">
+                          <div className="flex justify-between items-center mb-2">
+                            <h4 className="text-sm font-medium text-gray-700">
+                              Balances
+                            </h4>
+                            <button
+                              onClick={() => fetchWalletBalances(wallet)}
+                              disabled={loadingBalances[wallet.id]}
+                              className="text-sm text-blue-500 hover:text-blue-600 disabled:opacity-50"
+                            >
+                              {loadingBalances[wallet.id]
+                                ? "Loading..."
+                                : "Refresh"}
+                            </button>
+                          </div>
+                          {wallet.balances?.length ? (
+                            <div className="space-y-2">
+                              {wallet.balances.map((balance, index) => (
+                                <div
+                                  key={index}
+                                  className="flex justify-between items-center text-sm"
+                                >
+                                  <span className="text-black">
+                                    {balance.token.symbol}
+                                  </span>
+                                  <span className="text-black">
+                                    {balance.amount}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-sm text-gray-500">
+                              No balances to display
+                            </p>
+                          )}
+                        </div>
+
+                        <button
+                          onClick={() => {
+                            setSelectedWallet(wallet);
+                            setShowTransferForm(true);
+                          }}
+                          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors w-full"
+                        >
+                          Transfer
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -437,6 +594,61 @@ export default function Home() {
                   >
                     Create New Wallet
                   </button>
+                </div>
+              )}
+
+              {/* Transfer Form */}
+              {showTransferForm && selectedWallet && (
+                <div className="mt-6 p-6 border border-gray-200 rounded-lg">
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">
+                    Transfer from Wallet: {selectedWallet.id}
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Destination Address
+                      </label>
+                      <input
+                        type="text"
+                        value={destinationAddress}
+                        onChange={(e) => setDestinationAddress(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter destination address"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Amount
+                      </label>
+                      <input
+                        type="text"
+                        value={transferAmount}
+                        onChange={(e) => setTransferAmount(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter amount"
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={initiateTransfer}
+                        disabled={loading}
+                        className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {loading ? "Processing..." : "Transfer"}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowTransferForm(false);
+                          setSelectedWallet(null);
+                          setTransferAmount("");
+                          setDestinationAddress("");
+                        }}
+                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
