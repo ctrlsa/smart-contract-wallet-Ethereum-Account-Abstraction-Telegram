@@ -3,62 +3,141 @@
  * It is used to create a new Circle API client.
  */
 
-import { initiateUserControlledWalletsClient } from "@circle-fin/user-controlled-wallets";
+const CIRCLE_API_KEY =
+  "TEST_API_KEY:e646884655dc61d9a17ffa2a6fd2dcb9:e7c23a5dbc3a9441b1194a406017b750";
+const BASE_URL = "https://api.circle.com/v1/w3s";
 
-// Initialize the Circle client with the correct base URL for the W3S API
-const circleServer = initiateUserControlledWalletsClient({
-  apiKey:
-    "TEST_API_KEY:e646884655dc61d9a17ffa2a6fd2dcb9:e7c23a5dbc3a9441b1194a406017b750",
-  baseUrl: "https://api.circle.com/v1/w3s", // Changed to include w3s in the base URL
-});
-
-export interface CircleWalletResponse {
-  challengeId?: string;
-  userToken?: string;
-  encryptionKey?: string;
-  walletId?: string;
-  error?: string;
+interface CircleApiResponse<T> {
+  data: T;
+  error?: {
+    code: number;
+    message: string;
+  };
 }
 
-export const createUserToken = async (userId: string) => {
-  try {
-    // Create user token with proper error handling
-    const response = await circleServer.createUserToken({
-      userId,
-    });
+// Helper function for API calls
+const circleApiCall = async <T>(
+  endpoint: string,
+  options: RequestInit
+): Promise<CircleApiResponse<T>> => {
+  const url = `${BASE_URL}${endpoint}`;
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${CIRCLE_API_KEY}`,
+  };
 
-    if (!response?.data) {
-      throw new Error("No data received from Circle API");
-    }
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      ...headers,
+      ...options.headers,
+    },
+  });
 
-    return response.data;
-  } catch (error: any) {
-    console.error("Error creating user token:", error.response?.data || error);
-    throw new Error(
-      error.response?.data?.message || "Failed to create user token"
-    );
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "API call failed");
   }
+
+  return data;
 };
 
-export const createWalletWithPin = async (userId: string) => {
-  try {
-    // Create wallet with proper configuration
-    const response = await circleServer.createUserPinWithWallets({
+// Create User Token
+export const createUserToken = async (userId: string) => {
+  return circleApiCall("/users/token", {
+    method: "POST",
+    body: JSON.stringify({
       userId,
+    }),
+  });
+};
+
+// Create Wallet
+export const createWallet = async (userToken: string) => {
+  return circleApiCall("/user/wallets", {
+    method: "POST",
+    body: JSON.stringify({
+      idempotencyKey: crypto.randomUUID(),
       blockchains: ["ETH-SEPOLIA"],
       accountType: "SCA",
-      idempotencyKey: `${userId}-${Date.now()}`, // Add idempotency key
-    });
-
-    if (!response?.data) {
-      throw new Error("No data received from Circle API");
-    }
-
-    return response.data;
-  } catch (error: any) {
-    console.error("Error creating wallet:", error.response?.data || error);
-    throw new Error(error.response?.data?.message || "Failed to create wallet");
-  }
+    }),
+    headers: {
+      "X-User-Token": userToken,
+    },
+  });
 };
 
-export default circleServer;
+// List Wallets
+export const listWallets = async (userToken: string) => {
+  return circleApiCall("/user/wallets", {
+    method: "GET",
+    headers: {
+      "X-User-Token": userToken,
+    },
+  });
+};
+
+// Get Wallet Details
+export const getWalletDetails = async (walletId: string, userToken: string) => {
+  return circleApiCall(`/user/wallets/${walletId}`, {
+    method: "GET",
+    headers: {
+      "X-User-Token": userToken,
+    },
+  });
+};
+
+// Create Transaction
+export const createTransaction = async (
+  walletId: string,
+  userToken: string,
+  destinationAddress: string,
+  amount: string,
+  tokenId: string
+) => {
+  return circleApiCall(`/user/wallets/${walletId}/transactions`, {
+    method: "POST",
+    body: JSON.stringify({
+      idempotencyKey: crypto.randomUUID(),
+      destinationAddress,
+      amount,
+      tokenId,
+      fee: {
+        type: "level",
+        config: {
+          feeLevel: "MEDIUM",
+        },
+      },
+    }),
+    headers: {
+      "X-User-Token": userToken,
+    },
+  });
+};
+
+// Get Transaction Details
+export const getTransactionDetails = async (
+  walletId: string,
+  transactionId: string,
+  userToken: string
+) => {
+  return circleApiCall(
+    `/user/wallets/${walletId}/transactions/${transactionId}`,
+    {
+      method: "GET",
+      headers: {
+        "X-User-Token": userToken,
+      },
+    }
+  );
+};
+
+// List Transactions
+export const listTransactions = async (walletId: string, userToken: string) => {
+  return circleApiCall(`/user/wallets/${walletId}/transactions`, {
+    method: "GET",
+    headers: {
+      "X-User-Token": userToken,
+    },
+  });
+};
