@@ -10,6 +10,19 @@ type Step = "initial" | "setup-pin" | "create-wallet" | "manage-wallet";
 
 // Initialize the SDK
 
+interface Wallet {
+  id: string;
+  state: string;
+  walletSetId: string;
+  custodyType: string;
+  userId: string;
+  address: string;
+  blockchain: string;
+  accountType: string;
+  updateDate: string;
+  createDate: string;
+}
+
 export default function Home() {
   const sdk = new W3SSdk();
 
@@ -21,6 +34,7 @@ export default function Home() {
   const [challengeId, setChallengeId] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const [encryptionKey, setEncryptionKey] = useState<string>("");
+  const [wallets, setWallets] = useState<Wallet[]>([]);
 
   // Load userId from localStorage on component mount
   useEffect(() => {
@@ -156,28 +170,38 @@ export default function Home() {
       // Execute the challenge using the SDK
       console.log(sdk);
       await new Promise<ChallengeResult>((resolve, reject) => {
-        sdk.execute(newChallengeId, (error, result) => {
-          if (error) {
-            console.error(`Error executing challenge: ${error.message}`);
-            reject(error);
-            return;
-          }
+        const executeChallenge = () => {
+          sdk.execute(newChallengeId, (error, result) => {
+            if (error) {
+              console.error(`Error executing challenge: ${error.message}`);
+              reject(error);
+              return;
+            }
 
-          if (!result) {
-            reject(new Error("No result from challenge execution"));
-            return;
-          }
+            if (!result) {
+              reject(new Error("No result from challenge execution"));
+              return;
+            }
 
-          console.log(`Challenge: ${result.type}`);
-          console.log(`status: ${result.status}`);
+            console.log(`Challenge: ${result.type}`);
+            console.log(`status: ${result.status}`);
 
-          if (result.status === "COMPLETE") {
-            setStep("create-wallet");
-            resolve(result);
-          } else {
-            reject(new Error(`Challenge failed with status: ${result.status}`));
-          }
-        });
+            if (result.status === "COMPLETE") {
+              setStep("create-wallet");
+              resolve(result);
+            } else if (result.status === "IN_PROGRESS") {
+              // If still in progress, wait 2 seconds and try again
+              setTimeout(executeChallenge, 2000);
+            } else {
+              reject(
+                new Error(`Challenge failed with status: ${result.status}`)
+              );
+            }
+          });
+        };
+
+        // Start the polling
+        executeChallenge();
       });
     } catch (err: any) {
       console.error("PIN challenge error:", err);
@@ -186,33 +210,6 @@ export default function Home() {
           err.message ||
           "Failed to create PIN challenge"
       );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Set PIN
-  const setUserPin = async () => {
-    try {
-      if (!challengeId) {
-        throw new Error(
-          "No challenge ID available. Please create a PIN challenge first."
-        );
-      }
-      if (!pin || pin.length !== 6) {
-        throw new Error("Please enter a valid 6-digit PIN.");
-      }
-      setLoading(true);
-      await axios.put("/api/users/pin/set", {
-        userToken,
-        challengeId,
-        pin,
-      });
-
-      setStep("create-wallet");
-    } catch (err: any) {
-      console.error("PIN setup error:", err);
-      setError(err.response?.data?.error || "Failed to set PIN");
     } finally {
       setLoading(false);
     }
@@ -235,30 +232,41 @@ export default function Home() {
 
       // Execute the wallet creation challenge
       await new Promise<ChallengeResult>((resolve, reject) => {
-        sdk.execute(newChallengeId, (error, result) => {
-          if (error) {
-            console.error(`Error executing challenge: ${error.message}`);
-            reject(error);
-            return;
-          }
+        const executeChallenge = () => {
+          sdk.execute(newChallengeId, (error, result) => {
+            if (error) {
+              console.error(`Error executing challenge: ${error.message}`);
+              reject(error);
+              return;
+            }
 
-          if (!result) {
-            reject(new Error("No result from challenge execution"));
-            return;
-          }
+            if (!result) {
+              reject(new Error("No result from challenge execution"));
+              return;
+            }
 
-          console.log(`Challenge: ${result.type}`);
-          console.log(`status: ${result.status}`);
+            console.log(`Challenge: ${result.type}`);
+            console.log(`status: ${result.status}`);
+            console.log(result);
 
-          if (result.status === "COMPLETE") {
-            setStep("manage-wallet");
-            resolve(result);
-          } else {
-            reject(new Error(`Challenge failed with status: ${result.status}`));
-          }
-        });
+            if (result.status === "COMPLETE") {
+              setStep("manage-wallet");
+              resolve(result);
+            } else if (result.status === "IN_PROGRESS") {
+              // If still in progress, wait 2 seconds and try again
+              setTimeout(executeChallenge, 2000);
+            } else {
+              reject(
+                new Error(`Challenge failed with status: ${result.status}`)
+              );
+            }
+          });
+        };
+
+        // Start the polling
+        executeChallenge();
       });
-
+      console.log(response);
       console.log("Wallet created with ID:", response.data.walletId);
       setStep("manage-wallet");
     } catch (err: any) {
@@ -271,11 +279,47 @@ export default function Home() {
     }
   };
 
+  const clearUser = () => {
+    localStorage.removeItem("circle_user_id");
+    setUserId("");
+    setUserToken("");
+    setEncryptionKey("");
+    setStep("initial");
+    setError(null);
+  };
+
+  // Load wallets when entering manage-wallet step
+  useEffect(() => {
+    if (step === "manage-wallet" && userId) {
+      loadWallets();
+    }
+  }, [step, userId]);
+
+  const loadWallets = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/wallet/list?userId=${userId}`);
+      setWallets(response.data.wallets);
+    } catch (err: any) {
+      console.error("Error loading wallets:", err);
+      setError(err.response?.data?.error || "Failed to load wallets");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Section>
       <Cell>
         <div className="p-4">
-          <h1 className="text-2xl font-bold mb-6">Circle Wallet Setup</h1>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold">Circle Wallet</h1>
+            {userId && (
+              <Button onClick={clearUser} className="bg-red-500">
+                Clear User
+              </Button>
+            )}
+          </div>
 
           {step === "initial" && (
             <div className="space-y-4">
@@ -300,44 +344,18 @@ export default function Home() {
                   ? "Continue with Existing Account"
                   : "Create User Account"}
               </Button>
-              {userId && (
-                <Button
-                  onClick={() => {
-                    localStorage.removeItem("circle_user_id");
-                    setUserId("");
-                    setUserToken("");
-                    setStep("initial");
-                  }}
-                  className="mt-2"
-                >
-                  Use Different Account
-                </Button>
-              )}
             </div>
           )}
 
           {step === "setup-pin" && (
             <div className="space-y-4">
               <h2 className="text-xl font-semibold">Set up PIN</h2>
-              <Input
-                type="password"
-                placeholder="Enter 6-digit PIN"
-                maxLength={6}
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-              />
               <div className="space-x-2">
                 <Button
                   onClick={createPinChallenge}
                   disabled={loading || !userToken}
                 >
                   Create Challenge
-                </Button>
-                <Button
-                  onClick={setUserPin}
-                  disabled={loading || !challengeId || pin.length !== 6}
-                >
-                  Set PIN
                 </Button>
               </div>
             </div>
@@ -352,6 +370,55 @@ export default function Home() {
               <Button onClick={createWallet} disabled={loading}>
                 {loading ? "Creating..." : "Create Wallet"}
               </Button>
+            </div>
+          )}
+
+          {step === "manage-wallet" && (
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold">Your Wallets</h2>
+              {loading ? (
+                <p>Loading wallets...</p>
+              ) : wallets.length > 0 ? (
+                <div className="space-y-4">
+                  {wallets.map((wallet) => (
+                    <div
+                      key={wallet.id}
+                      className="p-4 border rounded-lg bg-white shadow-sm"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="font-medium">Wallet ID: {wallet.id}</p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            Address: {wallet.address}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Blockchain: {wallet.blockchain}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Type: {wallet.accountType}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Status: {wallet.state}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  <Button onClick={loadWallets} disabled={loading}>
+                    Refresh Wallets
+                  </Button>
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-600">No wallets found</p>
+                  <Button
+                    onClick={() => setStep("create-wallet")}
+                    className="mt-4"
+                  >
+                    Create New Wallet
+                  </Button>
+                </div>
+              )}
             </div>
           )}
 

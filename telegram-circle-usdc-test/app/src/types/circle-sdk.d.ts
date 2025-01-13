@@ -1,9 +1,10 @@
 declare module "@circle-fin/w3s-pw-web-sdk" {
-  export type ChallengeStatus = "COMPLETE" | "FAILED" | "PENDING";
+  export type ChallengeStatus = "COMPLETE" | "FAILED" | "IN_PROGRESS";
 
   export interface ChallengeResult {
     type: string;
     status: ChallengeStatus;
+    data: any;
   }
 
   export interface W3SSdkConfig {
