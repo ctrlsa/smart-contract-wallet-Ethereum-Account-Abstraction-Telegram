@@ -43,8 +43,28 @@ export default function Home() {
         userToken,
         encryptionKey,
       });
+
+      // Check if PIN is already set up
+      checkPinStatus();
     }
   }, [userToken, encryptionKey]);
+
+  // Check PIN status
+  const checkPinStatus = async () => {
+    try {
+      if (!userId) return;
+      console.log(userId);
+      const response = await axios.get(`/api/users/status?userId=${userId}`);
+      console.log(response.data);
+      if (response.data.hasPinEnabled) {
+        console.log("PIN is already enabled, skipping PIN setup");
+        setStep("manage-wallet");
+      }
+    } catch (err: any) {
+      console.error("Error checking PIN status:", err);
+      // Don't show error to user, just proceed with PIN setup
+    }
+  };
 
   // Get token for existing user
   const getExistingUserToken = async (existingUserId: string) => {
@@ -56,7 +76,18 @@ export default function Home() {
 
       setUserToken(response.data.userToken);
       setEncryptionKey(response.data.encryptionKey);
-      setStep("setup-pin");
+
+      // Check if PIN is already set up
+      const statusResponse = await axios.get(
+        `/api/users/status?userId=${existingUserId}`
+      );
+      console.log(statusResponse.data);
+      if (statusResponse.data.hasPinEnabled) {
+        console.log("PIN is already enabled, skipping PIN setup");
+        setStep("manage-wallet");
+      } else {
+        setStep("setup-pin");
+      }
     } catch (err: any) {
       console.error("Error getting existing user token:", err);
       setError(err.response?.data?.error || "Failed to get user token");
@@ -66,7 +97,12 @@ export default function Home() {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    console.log(step);
+    if (step === "setup-pin") {
+      checkPinStatus();
+    }
+  }, [step]);
   // Create user and get token
   const createUser = async () => {
     try {
@@ -81,7 +117,17 @@ export default function Home() {
       setUserId(newUserId);
       setUserToken(response.data.userToken);
       setEncryptionKey(response.data.encryptionKey);
-      setStep("setup-pin");
+
+      // Check if PIN is already set up (unlikely for new user, but good practice)
+      const statusResponse = await axios.get(
+        `/api/users/status?userId=${newUserId}`
+      );
+      if (statusResponse.data.hasPinEnabled) {
+        console.log("PIN is already enabled, skipping PIN setup");
+        setStep("manage-wallet");
+      } else {
+        setStep("setup-pin");
+      }
     } catch (err: any) {
       console.error("User creation error:", err);
       setError(err.response?.data?.error || "Failed to create user");
@@ -184,12 +230,42 @@ export default function Home() {
       const response = await axios.post("/api/wallet/create", {
         userToken,
       });
-      console.log(response);
 
+      const newChallengeId = response.data.challengeId;
+
+      // Execute the wallet creation challenge
+      await new Promise<ChallengeResult>((resolve, reject) => {
+        sdk.execute(newChallengeId, (error, result) => {
+          if (error) {
+            console.error(`Error executing challenge: ${error.message}`);
+            reject(error);
+            return;
+          }
+
+          if (!result) {
+            reject(new Error("No result from challenge execution"));
+            return;
+          }
+
+          console.log(`Challenge: ${result.type}`);
+          console.log(`status: ${result.status}`);
+
+          if (result.status === "COMPLETE") {
+            setStep("manage-wallet");
+            resolve(result);
+          } else {
+            reject(new Error(`Challenge failed with status: ${result.status}`));
+          }
+        });
+      });
+
+      console.log("Wallet created with ID:", response.data.walletId);
       setStep("manage-wallet");
     } catch (err: any) {
       console.error("Wallet creation error:", err);
-      setError(err.response?.data?.error || "Failed to create wallet");
+      setError(
+        err.response?.data?.error || err.message || "Failed to create wallet"
+      );
     } finally {
       setLoading(false);
     }

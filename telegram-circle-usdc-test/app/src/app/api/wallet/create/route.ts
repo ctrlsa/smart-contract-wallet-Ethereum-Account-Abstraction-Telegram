@@ -8,6 +8,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,15 +24,17 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       data: {
-        idempotencyKey: "c9afb154-0417-4c60-93dc-591fc89393c2",
-        accountType: "EOA",
+        idempotencyKey: uuidv4(),
         blockchains: ["ETH-SEPOLIA"],
+        accountType: "EOA",
       },
     });
 
-    return NextResponse.json(response.data);
+    return NextResponse.json({
+      challengeId: response.data.data.challengeId,
+      walletId: response.data.data.walletId,
+    });
   } catch (error: any) {
-    console.log(error);
     console.error("Wallet creation error:", error.response?.data || error);
     return NextResponse.json(
       { error: error.response?.data?.message || "Failed to create wallet" },
