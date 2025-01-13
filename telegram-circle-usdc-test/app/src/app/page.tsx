@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Section, Cell, Button, Input } from "@telegram-apps/telegram-ui";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { W3SSdk, ChallengeResult } from "@circle-fin/w3s-pw-web-sdk";
@@ -309,20 +308,23 @@ export default function Home() {
   };
 
   return (
-    <Section>
-      <Cell>
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">Circle Wallet</h1>
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-2xl font-bold text-gray-900">Circle Wallet</h1>
             {userId && (
-              <Button onClick={clearUser} className="bg-red-500">
+              <button
+                onClick={clearUser}
+                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+              >
                 Clear User
-              </Button>
+              </button>
             )}
           </div>
 
           {step === "initial" && (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {userId ? (
                 <p className="text-gray-600">
                   Welcome back! User ID: {userId.slice(0, 8)}...
@@ -332,103 +334,121 @@ export default function Home() {
                   Start by creating a new user account
                 </p>
               )}
-              <Button
+              <button
                 onClick={
                   userId ? () => getExistingUserToken(userId) : createUser
                 }
                 disabled={loading}
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading
                   ? "Processing..."
                   : userId
                   ? "Continue with Existing Account"
                   : "Create User Account"}
-              </Button>
+              </button>
             </div>
           )}
 
           {step === "setup-pin" && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Set up PIN</h2>
-              <div className="space-x-2">
-                <Button
-                  onClick={createPinChallenge}
-                  disabled={loading || !userToken}
-                >
-                  Create Challenge
-                </Button>
-              </div>
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Set up PIN
+              </h2>
+              <button
+                onClick={createPinChallenge}
+                disabled={loading || !userToken}
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Create Challenge
+              </button>
             </div>
           )}
 
           {step === "create-wallet" && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Create Wallet</h2>
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Create Wallet
+              </h2>
               <p className="text-gray-600">
                 Create your Ethereum wallet on Sepolia testnet
               </p>
-              <Button onClick={createWallet} disabled={loading}>
+              <button
+                onClick={createWallet}
+                disabled={loading}
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
                 {loading ? "Creating..." : "Create Wallet"}
-              </Button>
+              </button>
             </div>
           )}
 
           {step === "manage-wallet" && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-semibold">Your Wallets</h2>
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Your Wallets
+              </h2>
               {loading ? (
-                <p>Loading wallets...</p>
+                <div className="text-center py-8">
+                  <p className="text-gray-600">Loading wallets...</p>
+                </div>
               ) : wallets.length > 0 ? (
                 <div className="space-y-4">
                   {wallets.map((wallet) => (
                     <div
                       key={wallet.id}
-                      className="p-4 border rounded-lg bg-white shadow-sm"
+                      className="p-6 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
                     >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <p className="font-medium">Wallet ID: {wallet.id}</p>
-                          <p className="text-sm text-gray-600 mt-1">
-                            Address: {wallet.address}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            Blockchain: {wallet.blockchain}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            Type: {wallet.accountType}
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            Status: {wallet.state}
-                          </p>
+                      <div className="space-y-2">
+                        <p className="font-medium text-gray-900">
+                          Wallet ID: {wallet.id}
+                        </p>
+                        <p className="text-sm text-gray-600 break-all">
+                          Address: {wallet.address}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                            {wallet.blockchain}
+                          </span>
+                          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                            {wallet.accountType}
+                          </span>
+                          <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
+                            {wallet.state}
+                          </span>
                         </div>
                       </div>
                     </div>
                   ))}
-                  <Button onClick={loadWallets} disabled={loading}>
+                  <button
+                    onClick={loadWallets}
+                    disabled={loading}
+                    className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
                     Refresh Wallets
-                  </Button>
+                  </button>
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-600">No wallets found</p>
-                  <Button
+                  <p className="text-gray-600 mb-4">No wallets found</p>
+                  <button
                     onClick={() => setStep("create-wallet")}
-                    className="mt-4"
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
                   >
                     Create New Wallet
-                  </Button>
+                  </button>
                 </div>
               )}
             </div>
           )}
 
           {error && (
-            <div className="mt-4 p-4 bg-red-100 text-red-700 rounded">
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-md">
               {error}
             </div>
           )}
         </div>
-      </Cell>
-    </Section>
+      </div>
+    </div>
   );
 }
