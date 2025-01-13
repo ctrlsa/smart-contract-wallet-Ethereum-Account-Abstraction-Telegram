@@ -317,6 +317,32 @@ export default function Home() {
       setLoading(true);
       const response = await axios.get(`/api/wallet/list?userId=${userId}`);
       setWallets(response.data.wallets);
+
+      // Fetch balances for all wallets
+      await Promise.all(
+        response.data.wallets.map(async (wallet: Wallet) => {
+          try {
+            setLoadingBalances((prev) => ({ ...prev, [wallet.id]: true }));
+            const balanceResponse = await axios.get(
+              `/api/wallet/balances?walletId=${wallet.id}&userToken=${userToken}`
+            );
+            setWallets((prevWallets) =>
+              prevWallets.map((w) =>
+                w.id === wallet.id
+                  ? { ...w, balances: balanceResponse.data.balances }
+                  : w
+              )
+            );
+          } catch (err: any) {
+            console.error(
+              `Error fetching balance for wallet ${wallet.id}:`,
+              err
+            );
+          } finally {
+            setLoadingBalances((prev) => ({ ...prev, [wallet.id]: false }));
+          }
+        })
+      );
     } catch (err: any) {
       console.error("Error loading wallets:", err);
       setError(err.response?.data?.error || "Failed to load wallets");
