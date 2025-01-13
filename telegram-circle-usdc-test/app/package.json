@@ -10,15 +10,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@circle-fin/w3s-pw-web-sdk": "^1.1.9",
     "@telegram-apps/react-router-integration": "^1.0.0",
     "@telegram-apps/sdk-react": "^1.0.0",
     "@telegram-apps/telegram-ui": "^2.1.5",
     "@tonconnect/ui-react": "^2.0.5",
+    "axios": "^1.7.9",
     "eruda": "^3.0.1",
     "next": "14.2.4",
     "normalize.css": "^8.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",
