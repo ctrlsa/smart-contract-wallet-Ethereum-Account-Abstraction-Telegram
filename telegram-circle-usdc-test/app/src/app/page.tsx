@@ -365,6 +365,7 @@ export default function Home() {
       }
 
       setLoading(true);
+      console.log(selectedToken);
       const response = await axios.post("/api/wallet/transfer", {
         userToken,
         walletId: selectedWallet.id,
