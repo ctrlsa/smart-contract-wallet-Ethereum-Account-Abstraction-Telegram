@@ -52,6 +52,7 @@ export default function Home() {
   const [loadingBalances, setLoadingBalances] = useState<{
     [key: string]: boolean;
   }>({});
+  const [selectedToken, setSelectedToken] = useState<TokenBalance | null>(null);
 
   // Load userId from localStorage on component mount
   useEffect(() => {
@@ -353,8 +354,13 @@ export default function Home() {
 
   const initiateTransfer = async () => {
     try {
-      if (!selectedWallet || !transferAmount || !destinationAddress) {
-        setError("Please fill in all transfer details");
+      if (
+        !selectedWallet ||
+        !transferAmount ||
+        !destinationAddress ||
+        !selectedToken
+      ) {
+        setError("Please fill in all transfer details and select a token");
         return;
       }
 
@@ -364,6 +370,7 @@ export default function Home() {
         walletId: selectedWallet.id,
         destinationAddress,
         amount: transferAmount,
+        tokenAddress: selectedToken.token.tokenAddress,
       });
 
       const newChallengeId = response.data.challengeId;
@@ -391,6 +398,7 @@ export default function Home() {
               // Reset form
               setShowTransferForm(false);
               setSelectedWallet(null);
+              setSelectedToken(null);
               setTransferAmount("");
               setDestinationAddress("");
               // Reload wallets to show updated balances
@@ -446,7 +454,7 @@ export default function Home() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Circle Wallet</h1>
+            <h1 className="text-2xl font-bold text-black">Circle Wallet</h1>
             {userId && (
               <button
                 onClick={clearUser}
@@ -460,11 +468,11 @@ export default function Home() {
           {step === "initial" && (
             <div className="space-y-6">
               {userId ? (
-                <p className="text-gray-600">
+                <p className="text-black">
                   Welcome back! User ID: {userId.slice(0, 8)}...
                 </p>
               ) : (
-                <p className="text-gray-600">
+                <p className="text-black">
                   Start by creating a new user account
                 </p>
               )}
@@ -486,9 +494,7 @@ export default function Home() {
 
           {step === "setup-pin" && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Set up PIN
-              </h2>
+              <h2 className="text-xl font-semibold text-black">Set up PIN</h2>
               <button
                 onClick={createPinChallenge}
                 disabled={loading || !userToken}
@@ -501,10 +507,10 @@ export default function Home() {
 
           {step === "create-wallet" && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-xl font-semibold text-black">
                 Create Wallet
               </h2>
-              <p className="text-gray-600">
+              <p className="text-black">
                 Create your Ethereum wallet on Sepolia testnet
               </p>
               <button
@@ -519,12 +525,10 @@ export default function Home() {
 
           {step === "manage-wallet" && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-gray-900">
-                Your Wallets
-              </h2>
+              <h2 className="text-xl font-semibold text-black">Your Wallets</h2>
               {loading ? (
                 <div className="text-center py-8">
-                  <p className="text-gray-600">Loading wallets...</p>
+                  <p className="text-black">Loading wallets...</p>
                 </div>
               ) : wallets.length > 0 ? (
                 <div className="space-y-4">
@@ -534,20 +538,20 @@ export default function Home() {
                       className="p-6 border border-gray-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
                     >
                       <div className="space-y-2">
-                        <p className="font-medium text-gray-900">
+                        <p className="font-medium text-black">
                           Wallet ID: {wallet.id}
                         </p>
-                        <p className="text-sm text-gray-600 break-all">
+                        <p className="text-sm text-black break-all">
                           Address: {wallet.address}
                         </p>
                         <div className="flex flex-wrap gap-2 mt-2">
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                          <span className="px-2 py-1 bg-blue-100 text-black text-xs rounded-full">
                             {wallet.blockchain}
                           </span>
-                          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                          <span className="px-2 py-1 bg-green-100 text-black text-xs rounded-full">
                             {wallet.accountType}
                           </span>
-                          <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
+                          <span className="px-2 py-1 bg-purple-100 text-black text-xs rounded-full">
                             {wallet.state}
                           </span>
                         </div>
@@ -555,7 +559,7 @@ export default function Home() {
                         {/* Balances Section */}
                         <div className="mt-4">
                           <div className="flex justify-between items-center mb-2">
-                            <h4 className="text-sm font-medium text-gray-700">
+                            <h4 className="text-sm font-medium text-black">
                               Balances
                             </h4>
                             <button
@@ -573,19 +577,19 @@ export default function Home() {
                               {wallet.balances.map((balance, index) => (
                                 <div
                                   key={index}
-                                  className="flex justify-between items-center text-sm"
+                                  className="flex justify-between items-center text-sm text-black"
                                 >
                                   <span className="text-black">
                                     {balance.token.symbol}
                                   </span>
                                   <span className="text-black">
-                                    {balance.amount}
+                                    {parseFloat(balance.amount).toFixed(4)}
                                   </span>
                                 </div>
                               ))}
                             </div>
                           ) : (
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-black">
                               No balances to display
                             </p>
                           )}
@@ -606,14 +610,14 @@ export default function Home() {
                   <button
                     onClick={loadWallets}
                     disabled={loading}
-                    className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-2 bg-gray-100 text-black rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Refresh Wallets
                   </button>
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <p className="text-gray-600 mb-4">No wallets found</p>
+                  <p className="text-black mb-4">No wallets found</p>
                   <button
                     onClick={() => setStep("create-wallet")}
                     className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
@@ -622,30 +626,98 @@ export default function Home() {
                   </button>
                 </div>
               )}
+            </div>
+          )}
 
-              {/* Transfer Form */}
-              {showTransferForm && selectedWallet && (
-                <div className="mt-6 p-6 border border-gray-200 rounded-lg">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">
-                    Transfer from Wallet: {selectedWallet.id}
-                  </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm text-black mb-1">
-                        Destination Address
-                      </label>
-                      <input
-                        type="text"
-                        value={destinationAddress}
-                        onChange={(e) => setDestinationAddress(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                        placeholder="Enter destination address"
-                      />
+          {/* Transfer Modal */}
+          {showTransferForm && selectedWallet && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
+                <button
+                  onClick={() => {
+                    setShowTransferForm(false);
+                    setSelectedWallet(null);
+                    setSelectedToken(null);
+                    setTransferAmount("");
+                    setDestinationAddress("");
+                  }}
+                  className="absolute top-4 right-4 text-black hover:text-gray-600"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
+                <h3 className="text-lg font-medium text-black mb-4">
+                  Transfer Funds
+                </h3>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">
+                      From Wallet
+                    </label>
+                    <div className="text-sm text-black break-all bg-gray-50 p-2 rounded">
+                      {selectedWallet.address}
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-black mb-1">
-                        Amount
-                      </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">
+                      Select Token
+                    </label>
+                    <div className="space-y-2">
+                      {selectedWallet.balances?.map((balance) => (
+                        <button
+                          key={balance.token.tokenAddress}
+                          onClick={() => setSelectedToken(balance)}
+                          className={`w-full p-3 rounded-md border ${
+                            selectedToken?.token.tokenAddress ===
+                            balance.token.tokenAddress
+                              ? "border-blue-500 bg-blue-50"
+                              : "border-gray-200 hover:border-blue-300"
+                          } transition-colors`}
+                        >
+                          <div className="flex justify-between items-center text-black">
+                            <span className="font-medium">
+                              {balance.token.symbol}
+                            </span>
+                            <span>{parseFloat(balance.amount).toFixed(4)}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">
+                      Destination Address
+                    </label>
+                    <input
+                      type="text"
+                      value={destinationAddress}
+                      onChange={(e) => setDestinationAddress(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+                      placeholder="Enter destination address"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-black mb-1">
+                      Amount{" "}
+                      {selectedToken && `(${selectedToken.token.symbol})`}
+                    </label>
+                    <div className="relative">
                       <input
                         type="text"
                         value={transferAmount}
@@ -653,35 +725,42 @@ export default function Home() {
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                         placeholder="Enter amount"
                       />
-                    </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={initiateTransfer}
-                        disabled={loading}
-                        className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        {loading ? "Processing..." : "Transfer"}
-                      </button>
-                      <button
-                        onClick={() => {
-                          setShowTransferForm(false);
-                          setSelectedWallet(null);
-                          setTransferAmount("");
-                          setDestinationAddress("");
-                        }}
-                        className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
-                      >
-                        Cancel
-                      </button>
+                      {selectedToken && (
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-black">
+                          Max: {parseFloat(selectedToken.amount).toFixed(4)}
+                        </div>
+                      )}
                     </div>
                   </div>
+
+                  <div className="flex gap-3 mt-6">
+                    <button
+                      onClick={initiateTransfer}
+                      disabled={loading || !selectedToken}
+                      className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loading ? "Processing..." : "Transfer"}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setShowTransferForm(false);
+                        setSelectedWallet(null);
+                        setSelectedToken(null);
+                        setTransferAmount("");
+                        setDestinationAddress("");
+                      }}
+                      className="px-4 py-2 bg-gray-100 text-black rounded-md hover:bg-gray-200 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
           )}
 
           {error && (
-            <div className="mt-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-md">
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 text-black rounded-md">
               {error}
             </div>
           )}
