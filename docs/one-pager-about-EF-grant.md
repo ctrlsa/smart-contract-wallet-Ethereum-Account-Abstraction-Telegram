@@ -14,6 +14,15 @@
 - Negotiations, iterations & paperwork with Ethereum Foundation 
 - Rewriting specs several times according to new inputs & updated requirements 
 
+## Milestones 1.1. & 1.3.: 
+### Takeaways, prototypes, links, etc. - in [this table](/docs/overview.md) 
+### R&D tasks done:
+- Limitations & possibilities of: Telegram API; TG Mini Apps: TG contacts book
+- Sign UserOp with key in Telegram (txn signing) 
+- Variants to store private key for EVM wallets integrated in Telegram
+- How various self-custodial wallet solutions existing in the market can / not be integrated in Telegram 
+- Build “minimum viable” prototypes / proof-of-concepts 
+
 
 
 
