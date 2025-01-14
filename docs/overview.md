@@ -16,6 +16,7 @@
 | Coinbase // {?}PR44 | {in progress} | {in progress} | Coinbase| | | | | {in progress} |
 | Tomo | {in progress} | {in progress} | Tomo | | | | | {in progress} |
 | ... | ... | ... | ... |
+| [telegram-circle-usdc-test](/telegram-circle-usdc-test) | [README.md](/telegram-circle-usdc-test/README.md) | [Prototype](https://t.me/CircleDevTestBot/CircleTestApp) | Circle's Programmable Wallets | High | No | Secure, compliant MPC system which is scalable and easy integration once base functionality has been setup.| Custodial, cost structure - transaction fee + network fee
 
 // Please, check ["How to contribute"](/README.md) to publish additional solutions to this table or to inform about bugs/updates
 
