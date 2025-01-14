@@ -38,7 +38,7 @@ A Next.js application demonstrating integration with Circle's Web3 Services (W3S
 ## Technology Stack
 
 ### Core Technologies
-
+- [NextJs Template for TG MiniApps](https://github.com/Telegram-Mini-Apps/nextjs-template)
 - [Circle Web3 Services SDK](https://developers.circle.com/w3s/docs/circle-web3-services-sdk) - Web SDK for wallet operations
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Axios](https://axios-http.com/) - HTTP client
