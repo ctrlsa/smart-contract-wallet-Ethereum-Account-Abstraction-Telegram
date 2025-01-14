@@ -37,5 +37,4 @@ R&D of solutions at the intersection of:
 6. Research how ZK solutions can be used with [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
 7. Build prototypes
 
-## Overview of developed projects
-[Overview doc](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/blob/main/docs/overview.md)
+## [Overview of R&D results](https://github.com/ctrlsa/smart-contract-wallet-Ethereum-Account-Abstraction-Telegram/blob/main/docs/overview.md) 
