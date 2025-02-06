@@ -1,5 +1,10 @@
 # Overview of R&D results
 ## Experiments to integrate various wallet solutions in [Telegram Mini App](https://core.telegram.org/bots/webapps)
+*{UPDATE} The table below will be modified after recent major changes in “Terms of Services” made by Telegram Team:*
+- *https://telegram.org/tos/bot-developers#7-blockchain-integration*
+- *https://core.telegram.org/bots/blockchain-guidelines*
+
+
 | Directory with code| ReadMe location | Deployed TG bot/app | Description | Security Level | Self-custodial | Pluses | Minuses | Comments, details, links | 
 |----------------|----------------|----------------|-------------|-------------|-------------|-------------|-------------|-------------|
 | [telegram-deterministic-keys-wallet-test](/telegram-deterministic-keys-wallet-test) | [README.md](/telegram-deterministic-keys-wallet-test/README.md) | [Prototype](https://t.me/LionetCriticalDevBot/TelegramDeterministicKeys) | Deterministic keys wallet | Medium | Depends on implementation | Easy to implement, key encryption inclueded in project | Needs to implement storage for keys, local storage or cloud storage | Check [README.md](/telegram-deterministic-keys-wallet-test/README.md) | 
